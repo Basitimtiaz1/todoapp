@@ -8,7 +8,24 @@ function App() {
   const inputhok=useRef();
   const [data,setData]=useState('Abdul Basit Imtiaz');
   const [List,setList]=useState([]);
+  const [id,setid]=useState();
+  const [Toggle,setToggle]=useState(false);
   const add=()=>{
+    if(Toggle){
+      const setUp=List.map((item)=>{
+        if(item.id===id){
+          console.log(id);
+          return {...item,name:data};
+        }
+        return item;
+      })
+      
+      setList(setUp);
+      setToggle(false);
+      toast.info("Updated");
+     // setData('');
+    }
+    else{
     const obj={id:uuid(),name:data};
     //data.push('A');
     setList((prev)=>[...prev,obj]);
@@ -17,6 +34,7 @@ function App() {
     setData('');
     toast.success("Added");
     inputhok.current.focus();
+    }
   }
   const del=(id)=>{
         if (window.confirm("Press a button!") == true) {
@@ -42,7 +60,18 @@ function App() {
     //console.log(List);
   } 
   const updItm=(id)=>{
-    console.log('update Click');
+    console.log('update Click '+id);
+    const upd=List.find((obj)=>{
+      
+      return obj.id===id;
+    
+    //return {...obj,name:data};
+    //}
+      //setList(upd);
+    })
+    setData(upd.name);
+      setid(upd.id);
+      setToggle(true);
     
   }
   return (
@@ -52,7 +81,9 @@ function App() {
           <div className='header'>
             <input type='text' name='data1' value={data} onChange={dataHnd} className='txt' ref={inputhok}/>
 
-            <button onClick={add} className='btn' disabled={data.length<=2?true:false}>Add</button>
+            <button onClick={add} className='btn' disabled={data.length<=2?true:false}>
+              {Toggle?'Update':'Add'}
+            </button>
             <button onClick={()=>deletedb(1)} className='btn'>Delete All</button>
 
           </div>
