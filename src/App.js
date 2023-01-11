@@ -23,7 +23,9 @@ function App() {
       setList(setUp);
       setToggle(false);
       toast.info("Updated");
-     // setData('');
+
+    setData('');
+    inputhok.current.focus();
     }
     else{
     const obj={id:uuid(),name:data};
@@ -72,6 +74,7 @@ function App() {
     setData(upd.name);
       setid(upd.id);
       setToggle(true);
+      inputhok.current.focus();
     
   }
   return (
